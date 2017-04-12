@@ -4,9 +4,12 @@
 *.jar
 *.war
 *.ear
+*.classpath
 
 # Eclipse
-.settings/
+*.settings/
+*.project
+
 
 # Maven
 log/
