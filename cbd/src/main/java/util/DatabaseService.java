@@ -1,8 +1,6 @@
 package util;
 
 import java.net.UnknownHostException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.bson.types.ObjectId;
 
@@ -10,14 +8,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 
-public class DatabaseServices {
+public class DatabaseService {
 
 	//Get table consumption
 	public DBCollection getConsumption() throws UnknownHostException{
-		MongoClient mongo = MongoConnection.connect("localhost", 27017);
-		DB db = mongo.getDB("trabajoCBD");
+		DB db = MongoConnection.connect("localhost", 27017);
 		DBCollection table = db.getCollection("consumption");
 		
 			//Debug -- comentar si no es para depurar
@@ -35,19 +31,26 @@ public class DatabaseServices {
 		return result;
 	}
 	
-	//Due to DB size this method will never be used
-	@Deprecated
-	public Set<DBCollection> getAllDatabase() throws UnknownHostException{
-		Set<DBCollection> result = new HashSet<DBCollection>();
-		MongoClient mongo = MongoConnection.connect("localhost", 27017);
+	
+	//Drop all consumption collection
+	public void dropConsumptionCollection() throws UnknownHostException{
+		DB db = MongoConnection.connect("localhost", 27017);
 		
-		DB db = mongo.getDB("trabajoCBD");
-		Set<String> tables = db.getCollectionNames();
-		for(String table: tables){
-			DBCollection row = db.getCollection(table);
-			result.add(row);
+		DBCollection table = db.getCollection("consumption");
+		table.drop();
+	}
+	
+	//Drop collection
+	public void dropCollection(String name) throws UnknownHostException{
+		DB db = MongoConnection.connect("localhost", 27017);
+		
+		try{
+			DBCollection table = db.getCollection(name);
+			table.drop();
+		}catch(Throwable e){
+			System.err.println(e.toString());
 		}
 		
-		return result;
 	}
+	
 }

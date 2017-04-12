@@ -4,14 +4,14 @@ import java.net.UnknownHostException;
 
 import com.mongodb.DBObject;
 
-import util.DatabaseServices;
+import util.DatabaseService;
 
 public class ConnectionTest {
 
 	public static void main(String[] args) throws UnknownHostException {
-		DatabaseServices test = new DatabaseServices();
+		DatabaseService test = new DatabaseService();
 		test.getConsumption();
-		DBObject object = test.findConsumptionById("58ee110473bd4cb49d891a24");
+		DBObject object = test.findConsumptionById("58ee3ef04dd417e657028afc");
 		System.out.println(object.toString());
 	}
 }
