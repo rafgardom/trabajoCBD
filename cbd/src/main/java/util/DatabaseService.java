@@ -1,7 +1,6 @@
 package util;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
 
 public class DatabaseService {
 
@@ -76,8 +76,8 @@ public class DatabaseService {
 		}catch(Throwable e){
 			System.err.println(e.toString());
 		}
-		
 	}
+	
 	
 	public DBCursor findByLocationProvincia(String location) throws UnknownHostException{
 		location = location.toUpperCase();
