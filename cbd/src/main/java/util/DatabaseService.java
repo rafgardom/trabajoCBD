@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -100,6 +101,14 @@ public class DatabaseService {
 			res[i] = result.next().toString();
 		}
 		return res;
+	}
+	
+	public Iterable<DBObject> getConsumosById(String id) throws UnknownHostException{
+		DBCollection collection = this.getConsumption();
+		DBObject match = new BasicDBObject("$match", new BasicDBObject("_id",new ObjectId(id)));
+		DBObject group = new BasicDBObject("$group", new BasicDBObject("_id","$consumos"));
+		AggregationOutput result = collection.aggregate(match, group);
+		return result.results();
 	}
 	
 }

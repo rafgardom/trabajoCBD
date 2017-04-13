@@ -45,5 +45,11 @@ public class ServicesTest {
 		ds.findByLocationCups2("ES0032000002955582LS");
 	}
 	
+	@Test
+	public void getConsumosById() throws UnknownHostException{
+		DatabaseService ds = new DatabaseService();
+		ds.getConsumosById("58ef5a307ca1eb286da2fc71");
+	}
+	
 	
 }
