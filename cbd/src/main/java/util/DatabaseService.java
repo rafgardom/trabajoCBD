@@ -1,29 +1,20 @@
 package util;
 
 import java.net.UnknownHostException;
-import java.text.Normalizer;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
-
 import com.google.common.collect.Lists;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
-import com.mongodb.Block;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MapReduceCommand;
-import com.mongodb.MapReduceOutput;
-import com.mongodb.MongoClient;
-
 import enumerados.PotenciaMax;
 import enumerados.TipoEnergia;
 
@@ -188,10 +179,9 @@ public class DatabaseService {
 	}
 	
 	// Devuelve la media de un tipo de energia consumida por año
-	public double getConsumoMedioByAnio(String tipoConsumo, Integer año) throws UnknownHostException{
-		// check string. debe ser una fecha.
+	public double getConsumoMedioByAnio(String tipoConsumo, Integer anio) throws UnknownHostException{
 		DBCollection collection = this.getConsumption();
-		DBObject query = new BasicDBObject("consumos.anio", año);
+		DBObject query = new BasicDBObject("consumos.anio", anio);
 		
 		DBObject projection = new BasicDBObject("_id",0);
 		projection.put("datos_titular", 0);
@@ -221,6 +211,24 @@ public class DatabaseService {
 		}
 		System.out.println(temp[0]/temp[1]);
 		return temp[0]/temp[1];
+	}
+	
+	//Devuelve todos los objetos con impago
+	public DBCursor getAllImpagos() throws UnknownHostException{
+		DBCollection collection = this.getConsumption();
+		DBObject query = new BasicDBObject("datos_contrato.impago", new BasicDBObject("$ne","00000000,00"));
+		DBCursor res = collection.find(query);
+		return res;
+	}
+	
+	//Devuelve todos los objetos con impago para un año determinado
+	public DBCursor getAllImpagosByAnio(String anio) throws UnknownHostException{
+		DBCollection collection = this.getConsumption();
+		DBObject query = new BasicDBObject();
+		query.put("datos_contrato.impago", new BasicDBObject("$ne","00000000,00"));
+		query.put("datos_contrato.fecha_ultima_lectura", new BasicDBObject("$regex",anio));
+		DBCursor res = collection.find(query);
+		return res;
 	}
 	
 }
