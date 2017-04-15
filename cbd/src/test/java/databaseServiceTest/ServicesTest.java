@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import org.junit.Test;
 
 import util.DatabaseService;
+import util.TipoEnergia;
 
 public class ServicesTest {
 
@@ -51,5 +52,16 @@ public class ServicesTest {
 		ds.getConsumosById("58ef5a307ca1eb286da2fc71");
 	}
 	
+	@Test
+	public void getAllId() throws UnknownHostException{
+		DatabaseService ds = new DatabaseService();
+		ds.getAllId();
+	}
+	
+	@Test
+	public void getConsumoMediobyId() throws UnknownHostException{
+		DatabaseService ds = new DatabaseService();
+		ds.getConsumoMediobyId(TipoEnergia.energia_activa_p4.toString(), "58efc945b815422eee9b52ae");
+	}
 	
 }
