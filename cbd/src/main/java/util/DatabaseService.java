@@ -9,11 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.google.common.collect.Lists;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -21,6 +23,9 @@ import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceOutput;
 import com.mongodb.MongoClient;
+
+import enumerados.PotenciaMax;
+import enumerados.TipoEnergia;
 
 public class DatabaseService {
 	
@@ -162,8 +167,6 @@ public class DatabaseService {
 	
 	// Devuelve la media de energia consumida para un tipo de energia y una ID dada.
 	public double getConsumoMediobyId(String tipoConsumo, String id) throws UnknownHostException{
-		double res = 0.0;
-		DB db = MongoConnection.connect("localhost", 27017);
 		DBCollection collection = this.getConsumption();
 		DBObject query = new BasicDBObject("_id", new ObjectId(id));
 		DBObject projection = new BasicDBObject("_id",0);
@@ -182,6 +185,42 @@ public class DatabaseService {
 		Map<String, Double> average = ToolKit.averageValues(values);
 		System.out.println(average.get(tipoConsumo));
 		return average.get(tipoConsumo);
+	}
+	
+	// Devuelve la media de un tipo de energia consumida por año
+	public double getConsumoMedioByAnio(String tipoConsumo, Integer año) throws UnknownHostException{
+		// check string. debe ser una fecha.
+		DBCollection collection = this.getConsumption();
+		DBObject query = new BasicDBObject("consumos.anio", año);
+		
+		DBObject projection = new BasicDBObject("_id",0);
+		projection.put("datos_titular", 0);
+		projection.put("localizacion", 0);
+		projection.put("sustitucion_contadores", 0);
+		projection.put("datos_contrato", 0);
+		for(TipoEnergia e:TipoEnergia.values()){
+			if(!(e.toString().equals(tipoConsumo)))
+				projection.put("consumos."+e.toString(), 0);
+		}
+		for(PotenciaMax pm:PotenciaMax.values())
+			projection.put("consumos."+pm.toString(), 0);			
+		projection.put("consumos.fecha_lectura_actual", 0);
+		projection.put("consumos.discriminacion_horaria", 0);
+		projection.put("consumos.tip_facturacion", 0);
+		projection.put("consumos.anio", 0);
+		projection.put("consumos.tarifa", 0);
+		projection.put("consumos.fecha_lectura_anterior", 0);
+		
+		DBCursor cursor = collection.find(query,projection);
+		Double[] temp = {0.0,0.0};
+		while(cursor.hasNext()){
+			DBObject obj = cursor.next();
+			List<String> ls = Arrays.asList(ToolKit.fromStringToArray(obj.toString()));
+			temp[0] = temp[0] + ToolKit.sumEnergies(ls)[0];
+			temp[1] = temp[1] + ToolKit.sumEnergies(ls)[1];
+		}
+		System.out.println(temp[0]/temp[1]);
+		return temp[0]/temp[1];
 	}
 	
 }

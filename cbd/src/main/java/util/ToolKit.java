@@ -14,7 +14,7 @@ public class ToolKit {
 	 */
 	public static String[] fromStringToArray(String s){
 		String[] res = s.split("\\[");
-		res = res[1].split(" , ");
+		res = res[1].split(",");
 		for(int i=0;i<res.length;i++){
 			StringBuilder sb = new StringBuilder(res[i]);
 			while(res[i].contains("{")) res[i] = sb.deleteCharAt(res[i].indexOf('{')).toString();
@@ -23,7 +23,6 @@ public class ToolKit {
 			while(res[i].contains(" ")) res[i] = sb.deleteCharAt(res[i].indexOf(' ')).toString();
 			while(res[i].contains("]")) res[i] = sb.deleteCharAt(res[i].indexOf(']')).toString();			
 		}
-		
 		return res;
 	}
 	
@@ -52,6 +51,20 @@ public class ToolKit {
 		
 		for(String s:res.keySet()){
 			res.put(s, Double.valueOf(res.get(s))/(times.get(s)*1.0));
+		}
+		return res;
+	}
+	
+	/*
+	 * Recibe una lista de String con el formato "Key:valor"
+	 * y devuelve un Array de double con dos valores: 
+	 * [ suma acumulada de los valores, numero de elementos sumados]
+	 */
+	public static Double[] sumEnergies(List<String> ls){
+		Double[] res = {0.0,0.0};
+		for(String s:ls){
+			res[0] = res[0] + Double.valueOf(s.split(":")[1]);
+			res[1] = res[1] + 1.0;
 		}
 		return res;
 	}
