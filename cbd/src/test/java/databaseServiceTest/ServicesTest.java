@@ -9,11 +9,11 @@ import util.DatabaseService;
 
 public class ServicesTest {
 
-	@Test
-	public void dropConsumptionTest() throws UnknownHostException{
-		DatabaseService util = new DatabaseService();
-		util.dropConsumptionCollection();
-	}
+//	@Test
+//	public void dropConsumptionTest() throws UnknownHostException{
+//		DatabaseService util = new DatabaseService();
+//		util.dropConsumptionCollection();
+//	}
 	
 	@Test
 	public void findByLocation() throws UnknownHostException{
@@ -49,7 +49,7 @@ public class ServicesTest {
 	@Test
 	public void getConsumosById() throws UnknownHostException{
 		DatabaseService ds = new DatabaseService();
-		ds.getConsumosById("58ef5a307ca1eb286da2fc71");
+		ds.getConsumosById("58fbaeb3d03ec399b136215a");
 	}
 	
 	@Test

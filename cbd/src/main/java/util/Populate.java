@@ -14,7 +14,7 @@ public class Populate {
 		
 		//Populate consumption collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection consumption "
-				+ "c:\\data-output.json --jsonArray";
+				+ "c:\\data\\data-output.json --jsonArray";
 		String commandPath ="cd C:\\Program Files\\MongoDB\\Server\\3.4\\bin";
 		ProcessBuilder builder = new ProcessBuilder(
 		      "cmd.exe", "/c", commandPath +"&&" + importCommand);
@@ -42,7 +42,35 @@ public class Populate {
 		
 		//Populate laboral collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection laboral "
-				+ "c:\\actividad-laboral-refact.json --jsonArray";
+				+ "c:\\data\\actividad-laboral-refact.json --jsonArray";
+		String commandPath ="cd C:\\Program Files\\MongoDB\\Server\\3.4\\bin";
+		ProcessBuilder builder = new ProcessBuilder(
+		      "cmd.exe", "/c", commandPath +"&&" + importCommand);
+		builder.redirectErrorStream(true);
+		
+	    Process p = builder.start();
+	    
+	    BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) { 
+            	break; 
+            }
+            
+            System.out.println(line);
+        }
+	}
+	
+	public static void populateIPC() throws IOException{
+		
+		//Erase collection if any
+		DatabaseService dbs = new DatabaseService();
+		dbs.dropIPCCollection();
+		
+		//Populate IPC collection
+		String importCommand ="mongoimport.exe --db trabajoCBD --collection ipc "
+				+ "c:\\data\\ipc_json.json --jsonArray";
 		String commandPath ="cd C:\\Program Files\\MongoDB\\Server\\3.4\\bin";
 		ProcessBuilder builder = new ProcessBuilder(
 		      "cmd.exe", "/c", commandPath +"&&" + importCommand);
@@ -65,5 +93,6 @@ public class Populate {
 	public static void main(String[] args) throws IOException {
 		 Populate.populateConsumption();
 		 Populate.populateLaboral();
+		 Populate.populateIPC();
 	}
 }

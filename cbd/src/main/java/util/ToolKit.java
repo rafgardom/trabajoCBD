@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class ToolKit {
 	/*
 	 * Recibe una lista de String con el formato "Key:valor"
 	 * y devuelve un Array de double con dos valores: 
-	 * [ suma acumulada de los valores, numero de elementos sumados]
+	 * [ suma acumulada de los valores, numero de elementos sumados].
 	 */
 	public static Double[] sumEnergies(List<String> ls){
 		Double[] res = {0.0,0.0};
@@ -69,5 +70,38 @@ public class ToolKit {
 		return res;
 	}
 
+	/*
+	 * Une un Array de elementos de n en n (donde n se pasa como parámetro).
+	 * Devuelve un Array de Arrays de esos elementos.
+	 */
+	public static String[][] joinByNumberOfElement(String[] input, int n){
+		String[][] res = new String[input.length/n][n];
+		String[] temp = new String[n];
+
+		for(int i=0; i<input.length+1; i++){
+			if(!(i%n==0) || i==0)
+				temp[i%n] = input[i];
+			else{
+				res[(i/n)-1] = temp.clone();
+				if(i<input.length)
+					temp[0] = input[i];
+			}
+		}
+		return res;
+	}
+
+	/*
+	 * Coge un Array de Arrays de valores del IPC y elimina aquellos
+	 * que no pertenecen al rango de los años pasados como parametro.
+	 */
+	public static List<String[]> ipc_takeValidYear(String[][] input, Integer anyoDespuesDe, Integer anyoAntesDe) {
+		List<String[]> res = new ArrayList<String[]>();
+		for(String[] a:input){
+			if( (Integer.valueOf(a[1].split(":")[1]) <= anyoDespuesDe) && (Integer.valueOf(a[1].split(":")[1]) >= anyoAntesDe) )
+				res.add(a);
+		}
+		System.out.println(res.toArray());
+		return res;
+	}
 
 }
