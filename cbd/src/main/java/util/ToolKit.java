@@ -96,7 +96,6 @@ public class ToolKit {
 			if( (Integer.valueOf(a[1].split(":")[1]) <= anyoDespuesDe) && (Integer.valueOf(a[1].split(":")[1]) >= anyoAntesDe) )
 				res.add(a);
 		}
-		System.out.println(res.toArray());
 		return res;
 	}
 

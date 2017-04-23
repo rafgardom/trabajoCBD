@@ -31,10 +31,38 @@ public class Queries_ipc {
 	 */
 	public List<String[]> getAll_TotalNacionalVariacionMensual(Integer anyoDespuesDe, Integer anyoAntesDe) throws UnknownHostException{
 		DBCursor cursor = this.getAll_TotalNacionalVariacionMensual();
-		String output = null;
 		while(cursor.hasNext()){
-			output = cursor.next().toString();
-			String[] result = ToolKit.fromStringToArray(output);
+			String[] result = ToolKit.fromStringToArray(cursor.next().toString());
+			String[][] res = ToolKit.joinByNumberOfElement(result,3);
+			return ToolKit.ipc_takeValidYear(res,anyoDespuesDe,anyoAntesDe);
+		}
+		return null;
+	}
+	
+	//Devuelve el objeto completo del indice por mes del IPC a nivel nacional (todos los años)
+	public DBCursor getAll_TotalNacionalIndice() throws UnknownHostException{
+		DBCollection collection = DatabaseService.getCollection("ipc");
+		DBObject query = new BasicDBObject("Nombre","General, Total Nacional, Total, Base 2011, Índice");
+		DBObject projection = new BasicDBObject("_id",0);
+		projection.put("COD", 0);
+		projection.put("Nombre", 0);
+		projection.put("T3_Unidad", 0);
+		projection.put("T3_Escala", 0);
+		projection.put("MetaData", 0);
+		projection.put("Data.Fecha", 0);
+		projection.put("Data.T3_TipoDato", 0);
+		DBCursor result = collection.find(query,projection);
+		return result;
+	}
+	
+	/*
+	 * Devuelve una lista de arrays con el formato [Mes, año, valor] del índice del IPC 
+	 * a nivel nacional entre los años pasados como parametros
+	 */
+	public List<String[]> getAll_TotalNacionalIndice(Integer anyoDespuesDe, Integer anyoAntesDe) throws UnknownHostException{
+		DBCursor cursor = this.getAll_TotalNacionalIndice();
+		while(cursor.hasNext()){
+			String[] result = ToolKit.fromStringToArray(cursor.next().toString());
 			String[][] res = ToolKit.joinByNumberOfElement(result,3);
 			return ToolKit.ipc_takeValidYear(res,anyoDespuesDe,anyoAntesDe);
 		}
