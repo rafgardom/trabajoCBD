@@ -1,17 +1,19 @@
 package connectionTest;
 
 import java.net.UnknownHostException;
+import java.util.Collection;
 
 import com.mongodb.DBObject;
 
 import util.DatabaseService;
+import util.Queries_consumption;
 
 public class ConnectionTest {
 
 	public static void main(String[] args) throws UnknownHostException {
-		DatabaseService test = new DatabaseService();
+		Queries_consumption test = new Queries_consumption();
 		DatabaseService.getCollection("consumption");
-		DBObject object = test.findConsumptionById("58ee3ef04dd417e657028afc");
+		Collection<DBObject> object = test.getAllId();
 		System.out.println(object.toString());
 	}
 }

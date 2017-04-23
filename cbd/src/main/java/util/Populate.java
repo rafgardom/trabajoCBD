@@ -10,7 +10,7 @@ public class Populate {
 	
 		//Erase collection if any
 		DatabaseService dbs = new DatabaseService();
-		dbs.dropConsumptionCollection();
+		dbs.dropCollection("consumption");
 		
 		//Populate consumption collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection consumption "
@@ -38,7 +38,7 @@ public class Populate {
 		
 		//Erase collection if any
 		DatabaseService dbs = new DatabaseService();
-		dbs.dropLaboralCollection();
+		dbs.dropCollection("laboral");
 		
 		//Populate laboral collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection laboral "
@@ -66,7 +66,7 @@ public class Populate {
 		
 		//Erase collection if any
 		DatabaseService dbs = new DatabaseService();
-		dbs.dropIPCCollection();
+		dbs.dropCollection("ipc");
 		
 		//Populate IPC collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection ipc "

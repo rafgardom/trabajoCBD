@@ -27,6 +27,6 @@ public class JsonReader {
 	
 	public static void main(String[] args) {
 		String urlFile = "c:\\data-output.json";
-		JSONArray jsn = JsonReader.reader(urlFile);
+		JsonReader.reader(urlFile);
 	}
 }
