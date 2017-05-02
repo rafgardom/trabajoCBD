@@ -42,7 +42,7 @@ public class Populate {
 		
 		//Populate laboral collection
 		String importCommand ="mongoimport.exe --db trabajoCBD --collection laboral "
-				+ "c:\\data\\actividad-laboral-refact.json --jsonArray";
+				+ "c:\\data\\actividad-laboral.json --jsonArray";
 		String commandPath ="cd C:\\Program Files\\MongoDB\\Server\\3.4\\bin";
 		ProcessBuilder builder = new ProcessBuilder(
 		      "cmd.exe", "/c", commandPath +"&&" + importCommand);
