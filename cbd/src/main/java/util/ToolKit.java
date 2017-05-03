@@ -1,9 +1,14 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.google.common.collect.Lists;
 
 public class ToolKit {
 	
@@ -24,6 +29,28 @@ public class ToolKit {
 			while(res[i].contains("]")) res[i] = sb.deleteCharAt(res[i].indexOf(']')).toString();			
 		}
 		return res;
+	}
+	
+	public static List<String> fromStringToArrayLaboral(String s){
+		String[] res = s.split(":");
+		String[] subString = null;
+		List<String> result = Lists.newArrayList();
+		for(int i=0;i<res.length;i++){
+			StringBuilder sb = new StringBuilder(res[i]);
+			while(res[i].contains("{")) res[i] = sb.deleteCharAt(res[i].indexOf('{')).toString();
+			while(res[i].contains("}")) res[i] = sb.deleteCharAt(res[i].indexOf('}')).toString();
+			while(res[i].contains("\"")) res[i] = sb.deleteCharAt(res[i].indexOf('"')).toString();	
+			while(res[i].contains(" ")) res[i] = sb.deleteCharAt(res[i].indexOf(' ')).toString();
+			while(res[i].contains("]")) res[i] = sb.deleteCharAt(res[i].indexOf(']')).toString();		
+			if(res[i].contains(",")){
+				subString = res[i].split(",");
+				result.addAll(Arrays.asList(subString));
+			}else{
+				result.add(res[i]);
+			}
+			
+		}
+		return result;
 	}
 	
 	/*
