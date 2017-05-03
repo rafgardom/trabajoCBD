@@ -1,3 +1,4 @@
+package QueriesTest;
 
 
 import java.net.UnknownHostException;

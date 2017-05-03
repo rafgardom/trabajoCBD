@@ -35,10 +35,12 @@ public class LaboralForm {
 		this.statistics = statistics;
 	}
 
+
 	@Override
 	public String toString() {
-		return "LaboralForm [statistics=" + statistics + "]";
+		return "LaboralForm [dataName=" + dataName + ", statistics=" + statistics + "]";
 	}
+
 	
 	
 	
