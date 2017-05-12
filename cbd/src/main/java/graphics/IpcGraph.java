@@ -32,6 +32,7 @@ public class IpcGraph {
 		
 		for(IpcForm ipcForm: ipcForms){
 			data.addValue(ipcForm.getValue(), "Evolución IPC (" + ipcForm.getYear() + ")", ipcForm.getMonth());
+			System.out.println(ipcForm);
 		}
 		
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);

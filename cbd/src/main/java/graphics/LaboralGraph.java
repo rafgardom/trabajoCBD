@@ -140,6 +140,20 @@ public class LaboralGraph {
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
 	}
 	
+	/**
+	 * Genera una gráfica de líneas multiples. Compara la actividad laboral en 2-3 años según el laboralType indicado
+	 * 
+	 * @param windowName
+	 * @param graphName
+	 * @param xAxisName
+	 * @param yAxisName
+	 * @param year1
+	 * @param year2
+	 * @param year3
+	 * @param laboralType
+	 * @param laboralRateType
+	 * @throws UnknownHostException
+	 */
 	public void generateLaboralRateMultipleLineGraphByYear(String windowName, String graphName, String xAxisName, String yAxisName, 
 			String year1, String year2, String year3, LaboralType laboralType, LaboralRateType laboralRateType) throws UnknownHostException{
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -152,7 +166,6 @@ public class LaboralGraph {
 		if(year3 != null){
 			laboralFormsList3 = ql.findYearFilterSummary(year3, laboralType);
 		}
-//		if(laboralRateType.getValue().equals("Paro")){
 			for(LaboralForm laboralForm: laboralFormsList1){
 				
 				if(laboralForm.getDataName().contains("T1")){
@@ -194,36 +207,6 @@ public class LaboralGraph {
 				}
 			}
 			
-			
-//		}else if(laboralRateType.getValue().equals("Actividad")){
-			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-//			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-//			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-			
-//		}else if(laboralRateType.getValue().equals("Empleo")){
-			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-//			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-//			
-//			for(LaboralForm laboralForm: laboralFormsList1){
-//				System.out.println(laboralForm);
-//			}
-//			
-//		}
 		
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
 		
@@ -239,8 +222,6 @@ public class LaboralGraph {
 		}else if(laboralRateType.getValue().equals("Empleo")){
 			data.addValue(laboralForm.getStatistics().getTasadeempleo(), type, period);
 		}
-		
-		
 	}
 	
 	/**
