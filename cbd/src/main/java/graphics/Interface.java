@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
+
+import util.ToolKit;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JRadioButtonMenuItem;
@@ -128,7 +131,8 @@ public class Interface {
 			}
 		});
 		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"2013", "2014", "2015", "2016"}));
-		comboBox_7.setBounds(112, 95, 56, 20);
+		anyoOpcional = Integer.valueOf(comboBox_7.getSelectedItem().toString());
+		comboBox_7.setBounds(456, 84, 56, 20);
 		frame.getContentPane().add(comboBox_7);
 		
 		Panel panel = new Panel();
@@ -240,6 +244,26 @@ public class Interface {
 					}
 				}
 				
+				if(graphicSelected.equals("Actividad laboral")){
+					try {
+						if(!isAnyoOpcional && !graficaBarras){
+							textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo1 y el año Inicio.");
+							LaboralGraph.generateLaboralRateLineGraph("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+						}
+						if(!isAnyoOpcional && graficaBarras){
+							textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo1 y el año Inicio.");
+							LaboralGraph.generateLaboralRateBarGraph("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+						}
+						if(isAnyoOpcional){
+							LaboralGraph.generateLaboralRateMultipleLineGraphByYear("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+","+anyoFin+","+anyoOpcional+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", 
+									anyoInicio.toString(), anyoFin.toString(), anyoOpcional.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+							textPane.setText("Nota: los años de Inicio y Fin no son considerados como tal, sino como años a comparar (sin considerar una fecha inicial o final)");
+						}
+					} catch (UnknownHostException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			}
 		});
 		btnGenerarGrfica.setBounds(207, 245, 133, 23);
@@ -251,7 +275,7 @@ public class Interface {
 				isAnyoOpcional = chckbxNewCheckBox.isSelected();
 			}
 		});
-		chckbxNewCheckBox.setBounds(10, 94, 97, 23);
+		chckbxNewCheckBox.setBounds(354, 83, 97, 23);
 		frame.getContentPane().add(chckbxNewCheckBox);
 		
 	}

@@ -27,7 +27,7 @@ public class LaboralGraph {
 	 * @param laboralType
 	 * @throws UnknownHostException
 	 */
-	public void generateLaboralRateLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralRateLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			String year, LaboralType laboralType, LaboralRateType laboralRateType) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -154,7 +154,7 @@ public class LaboralGraph {
 	 * @param laboralRateType
 	 * @throws UnknownHostException
 	 */
-	public void generateLaboralRateMultipleLineGraphByYear(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralRateMultipleLineGraphByYear(String windowName, String graphName, String xAxisName, String yAxisName, 
 			String year1, String year2, String year3, LaboralType laboralType, LaboralRateType laboralRateType) throws UnknownHostException{
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
 		Queries_laboral ql = new Queries_laboral();
@@ -169,13 +169,13 @@ public class LaboralGraph {
 			for(LaboralForm laboralForm: laboralFormsList1){
 				
 				if(laboralForm.getDataName().contains("T1")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T1");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T1");
 				}else if(laboralForm.getDataName().contains("T2")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T2");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T2");
 				}else if(laboralForm.getDataName().contains("T3")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T3");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T3");
 				}else if(laboralForm.getDataName().contains("T4")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T4");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year1, "T4");
 				}
 				
 			}
@@ -183,26 +183,26 @@ public class LaboralGraph {
 			for(LaboralForm laboralForm: laboralFormsList2){
 				
 				if(laboralForm.getDataName().contains("T1")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T1");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T1");
 				}else if(laboralForm.getDataName().contains("T2")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T2");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T2");
 				}else if(laboralForm.getDataName().contains("T3")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T3");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T3");
 				}else if(laboralForm.getDataName().contains("T4")){
-					this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T4");
+					addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year2, "T4");
 				}
 			}
 			
 			if(laboralFormsList3 != null){
 				for(LaboralForm laboralForm: laboralFormsList3){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, laboralType.getValue()+year3, "T4");
 					}
 				}
 			}
@@ -212,7 +212,7 @@ public class LaboralGraph {
 		
 	}
 	
-	private void addDataSetValue(LaboralForm laboralForm, DefaultCategoryDataset data, LaboralRateType laboralRateType, String type, String period){
+	private static void addDataSetValue(LaboralForm laboralForm, DefaultCategoryDataset data, LaboralRateType laboralRateType, String type, String period){
 		if(laboralRateType.getValue().equals("Paro")){
 			data.addValue(laboralForm.getStatistics().getTasadeparo(), type, period);
 			
@@ -235,7 +235,7 @@ public class LaboralGraph {
 	 * @param laboralType
 	 * @throws UnknownHostException
 	 */
-	public void generateLaboralRateBarGraph(String windowName,String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralRateBarGraph(String windowName,String graphName, String xAxisName, String yAxisName, 
 			String year, LaboralType laboralType, LaboralRateType laboralRateType) throws UnknownHostException{
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
 		GraphUtil gu = new GraphUtil();

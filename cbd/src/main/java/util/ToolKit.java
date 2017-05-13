@@ -10,6 +10,9 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.common.collect.Lists;
 
+import enumerados.LaboralRateType;
+import enumerados.LaboralType;
+
 public class ToolKit {
 	
 	/*
@@ -124,6 +127,23 @@ public class ToolKit {
 				res.add(a);
 		}
 		return res;
+	}
+	
+	public static LaboralType getRateType(String input){
+		if(input.equals("General")) return LaboralType.GENERAL;
+		if(input.equals("Primaria")) return LaboralType.PRIMARIA_O_INFERIOR;
+		if(input.equals("Secundaria-1 FP")) return LaboralType.SECUNDARIA_PRIMERAETAPA;
+		if(input.equals("Secundaria-2 FP")) return LaboralType.SECUNDARIA_SEGUNDAETAPA;
+		if(input.equals("Educ. Superior")) return LaboralType.EDUCACION_SUPERIOR;
+		return null;
+		
+	}
+
+	public static LaboralRateType getType(String input) {
+		if(input.equals("Paro")) return LaboralRateType.PARO;
+		if(input.equals("Empleo")) return LaboralRateType.EMPLEO;
+		if(input.equals("Actividad")) return LaboralRateType.ACTIVIDAD;
+		return null;
 	}
 
 }
