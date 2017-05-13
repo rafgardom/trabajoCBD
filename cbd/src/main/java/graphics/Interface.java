@@ -18,6 +18,7 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.UnknownHostException;
 import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -30,13 +31,19 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Panel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import java.awt.SystemColor;
 
 public class Interface {
 
 	private JFrame frame;
 	
 	public static String graphicSelected,tipo1_tipo, tipo1_rango,tipo2_tipo,tipo2_rango;
-	public static Integer anyoInicio, anyoFin;
+	public static Integer anyoInicio, anyoFin, anyoOpcional;
+	public static boolean graficaBarras,isAnyoOpcional;
+	public static JTextPane textPane = new JTextPane();
 
 	/**
 	 * Launch the application.
@@ -114,6 +121,16 @@ public class Interface {
 		comboBox_2.setBounds(87, 70, 56, 20);
 		frame.getContentPane().add(comboBox_2);
 		
+		final JComboBox comboBox_7 = new JComboBox();
+		comboBox_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				anyoOpcional = Integer.valueOf(comboBox_7.getSelectedItem().toString());
+			}
+		});
+		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"2013", "2014", "2015", "2016"}));
+		comboBox_7.setBounds(112, 95, 56, 20);
+		frame.getContentPane().add(comboBox_7);
+		
 		Panel panel = new Panel();
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setForeground(Color.GRAY);
@@ -171,15 +188,74 @@ public class Interface {
 		tipo2_rango = comboBox_6.getSelectedItem().toString();
 		panel_1.add(comboBox_6);
 		
+		final JCheckBox chckbxMostrarGrficaDe = new JCheckBox("Mostrar gráfica de barras (en caso de estar disponible)");
+		chckbxMostrarGrficaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				graficaBarras = chckbxMostrarGrficaDe.isSelected();
+			}
+		});
+		chckbxMostrarGrficaDe.setBounds(10, 215, 372, 23);
+		frame.getContentPane().add(chckbxMostrarGrficaDe);
+		textPane.setBackground(Color.LIGHT_GRAY);
+		
+		
+		textPane.setForeground(Color.BLACK);
+		textPane.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textPane.setEnabled(false);
+		textPane.setEditable(false);
+		textPane.setBounds(10, 157, 517, 51);
+		textPane.setDisabledTextColor(new Color(0).RED);
+		frame.getContentPane().add(textPane);
+		
+		
 		JButton btnGenerarGrfica = new JButton("Generar gráfica");
 		btnGenerarGrfica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(graphicSelected.equals("Variación IPC")){
+					try {
+						if(!graficaBarras)
+							if(!isAnyoOpcional)
+								IpcGraph.generateIpcVariationLineGraph("Gráfica", "Variación IPC", "Meses", "Variación", anyoInicio, anyoFin);
+							else{
+								IpcGraph.generateIpcVariationMultipleLineGraph("Gráfica", "Variación IPC", "Meses", "Variación", anyoInicio, anyoFin, anyoOpcional);
+								textPane.setText("Nota: los años de Inicio y Fin no son considerados como tal, sino como años a comparar (sin considerar una fecha inicial o final)");
+							}
+						else
+							IpcGraph.generateIpcVariationBarGraph("Gráfica", "Variación IPC",  "Meses", "Variación", anyoInicio, anyoFin);
+					} catch (UnknownHostException e) {
+						e.printStackTrace();
+					}				
+				}
+				
+				if(graphicSelected.equals("Nivel IPC")){
+					try {
+						textPane.setText("El nivel de IPC unicamente muestra los niveles de un año. El único año leido será el de \"Inicio\" ");
+						if(!graficaBarras)
+							IpcGraph.generateIpcLevelLineGraph("Gráfica", "Nivel de IPC", "Meses", "Nivel", anyoInicio, anyoInicio);
+						else
+							IpcGraph.generateIpcLevelBarGraph("Gráfica", "Nivel de IPC",  "Meses", "Nivel", anyoInicio, anyoInicio);
+					} catch (UnknownHostException e) {
+						e.printStackTrace();
+					}
+				}
 				
 			}
 		});
 		btnGenerarGrfica.setBounds(207, 245, 133, 23);
 		frame.getContentPane().add(btnGenerarGrfica);
+		
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("Opcional");
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isAnyoOpcional = chckbxNewCheckBox.isSelected();
+			}
+		});
+		chckbxNewCheckBox.setBounds(10, 94, 97, 23);
+		frame.getContentPane().add(chckbxNewCheckBox);
+		
 	}
+	
 	
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

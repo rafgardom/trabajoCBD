@@ -22,7 +22,7 @@ public class IpcGraph {
 	 * @param endPeriodYear
 	 * @throws UnknownHostException
 	 */
-	public void generateIpcVariationLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateIpcVariationLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer openPeriodYear, Integer endPeriodYear) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -50,7 +50,7 @@ public class IpcGraph {
 	 * @param endPeriodYear
 	 * @throws UnknownHostException
 	 */
-	public void generateIpcLevelLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateIpcLevelLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer openPeriodYear, Integer endPeriodYear) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -78,7 +78,7 @@ public class IpcGraph {
 	 * @param endPeriodYear
 	 * @throws UnknownHostException
 	 */
-	public void generateIpcVariationBarGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateIpcVariationBarGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer openPeriodYear, Integer endPeriodYear) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -105,7 +105,7 @@ public class IpcGraph {
 	 * @param endPeriodYear
 	 * @throws UnknownHostException
 	 */
-	public void generateIpcLevelBarGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateIpcLevelBarGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer openPeriodYear, Integer endPeriodYear) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -137,7 +137,7 @@ public class IpcGraph {
 	 * @param thirdCompareYear (optional)
 	 * @throws UnknownHostException
 	 */
-	public void generateIpcVariationMultipleLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateIpcVariationMultipleLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer firstCompareYear, Integer secondCompareYear, Integer thirdCompareYear) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
