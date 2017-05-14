@@ -13,6 +13,7 @@ public class MongoConnection {
 	//Uses to connect to DB
 	@SuppressWarnings({ "deprecation" })
 	public static DB connect(String address, int port) throws UnknownHostException{
+		@SuppressWarnings("resource")
 		MongoClient mongo = new MongoClient(address, port);
 		DB db = mongo.getDB("trabajoCBD");
 		return db;

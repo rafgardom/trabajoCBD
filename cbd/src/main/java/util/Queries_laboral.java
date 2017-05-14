@@ -3,12 +3,9 @@ package util;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import javax.tools.Tool;
-
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Lf2SpacesIndenter;
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;

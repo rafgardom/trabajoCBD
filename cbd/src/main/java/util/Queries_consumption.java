@@ -5,11 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationOperationContext;
-import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
-import org.springframework.data.mongodb.core.query.Criteria;
 
 import com.google.common.collect.Lists;
 import com.mongodb.AggregationOptions;
@@ -19,8 +16,6 @@ import com.mongodb.Cursor;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.client.AggregateIterable;
-
 
 import enumerados.PotenciaMax;
 import enumerados.TipoEnergia;

@@ -1,11 +1,9 @@
 package util;
 
 import java.net.UnknownHostException;
-import org.bson.types.ObjectId;
-import com.mongodb.BasicDBObject;
+
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 
 public class DatabaseService {
 	

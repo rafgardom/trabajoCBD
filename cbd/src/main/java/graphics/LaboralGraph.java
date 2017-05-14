@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Lf2SpacesIndenter;
 import com.google.common.collect.Lists;
 
 import enumerados.LaboralRateType;

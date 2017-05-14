@@ -19,4 +19,16 @@ public class TestQueries_ipc {
 		ds.getAll_TotalNacionalVariacionMensual(2016,2014);
 	}
 
+	@Test
+	public void getAll_TotalNacionalIndice() throws UnknownHostException{
+		Queries_ipc ds = new Queries_ipc();
+		ds.getAll_TotalNacionalIndice();
+	}
+	
+	@Test
+	public void getAll_TotalNacionalIndice2() throws UnknownHostException{
+		Queries_ipc ds = new Queries_ipc();
+		ds.getAll_TotalNacionalIndice(2016, 2014);
+	}
+
 }

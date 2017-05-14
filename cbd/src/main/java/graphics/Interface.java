@@ -1,44 +1,29 @@
 package graphics;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.SwingConstants;
-
-import util.ToolKit;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.UnknownHostException;
-import java.awt.Dimension;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+
 import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.ComboBoxEditor;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Panel;
-import java.awt.Color;
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.awt.FlowLayout;
+
+import util.ToolKit;
 
 public class Interface {
 
@@ -75,6 +60,7 @@ public class Interface {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.WHITE);
@@ -90,9 +76,9 @@ public class Interface {
 			}
 		});
 		comboBox.setToolTipText("");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Variación IPC", "Nivel IPC", "Actividad laboral", "Consumo energético", "Consumo medio", "Laboral + IPC"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Variación IPC", "Nivel IPC", "Actividad laboral", "Consumo energético", "Laboral + IPC", "Consumo energético + IPC", "Laboral + consumo energético"}));
 		graphicSelected = comboBox.getSelectedItem().toString();
-		comboBox.setBounds(10, 11, 133, 20);
+		comboBox.setBounds(10, 11, 191, 20);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblAoInicio = new JLabel("Inicio");
@@ -133,7 +119,7 @@ public class Interface {
 		});
 		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"2013", "2014", "2015", "2016"}));
 		anyoOpcional = Integer.valueOf(comboBox_7.getSelectedItem().toString());
-		comboBox_7.setBounds(290, 19, 56, 20);
+		comboBox_7.setBounds(305, 12, 56, 20);
 		frame.getContentPane().add(comboBox_7);
 		
 		Panel panel = new Panel();
@@ -244,7 +230,7 @@ public class Interface {
 				
 				if(graphicSelected.equals("Consumo energético")){
 					try{
-						textPane.setText("Nota: el único año tomado como parámetro será en de Inicio.");
+						textPane.setText("Nota: el único año tomado como parámetro será el de Inicio.");
 						if(!graficaBarras)
 							ConsumptionGraph.generateConsumptionLineGraph("Gráfica", "Consumo energético", "Trimestre", "Consumo",  anyoInicio.toString());
 						else
@@ -256,12 +242,30 @@ public class Interface {
 				
 				if(graphicSelected.equals("Laboral + IPC")){
 					try{
+						textPane.setText("Nota: el único año tomado como parámetro será el de Inicio.");
 						CombinationGraph.generateLaboralIpcGraph("Gráfica", "Laboral - IPC", "Trimestres", "Valores", anyoInicio, ToolKit.getType(tipo_tipo));
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 				
+				if(graphicSelected.equals("Consumo energético + IPC")){
+					try{
+						textPane.setText("Nota: el único año tomado como parámetro será el de Inicio.");
+						CombinationGraph.generateConsumptionIpcGraph("Gráfica", "Consumo energético - IPC", "Trimestres", "Valores", anyoInicio);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(graphicSelected.equals("Laboral + consumo energético")){
+					try{
+						textPane.setText("Nota: el único año tomado como parámetro será el de Inicio.");
+						CombinationGraph.generateLaboralConsumptionGraph("Gráfica", "Laboral - Consumo energético", "Trimestres", "Valores", anyoInicio, ToolKit.getType(tipo_tipo));
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		btnGenerarGrfica.setBounds(207, 245, 133, 23);
@@ -273,7 +277,7 @@ public class Interface {
 				isAnyoOpcional = chckbxNewCheckBox.isSelected();
 			}
 		});
-		chckbxNewCheckBox.setBounds(207, 18, 77, 23);
+		chckbxNewCheckBox.setBounds(222, 11, 77, 23);
 		frame.getContentPane().add(chckbxNewCheckBox);
 		
 		JPanel panel_1 = new JPanel();
@@ -331,6 +335,7 @@ public class Interface {
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -348,7 +353,9 @@ public class Interface {
 			}
 		});
 	}
+	@SuppressWarnings({ "unused", "serial" })
 	private class SwingAction extends AbstractAction {
+		@SuppressWarnings("unused")
 		public SwingAction() {
 			putValue(NAME, "SwingAction");
 			putValue(SHORT_DESCRIPTION, "Some short description");

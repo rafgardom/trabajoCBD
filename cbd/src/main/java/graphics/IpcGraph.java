@@ -211,6 +211,7 @@ public class IpcGraph {
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
 	}
 	
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) throws UnknownHostException {
 		IpcGraph ipc = new IpcGraph();
 		

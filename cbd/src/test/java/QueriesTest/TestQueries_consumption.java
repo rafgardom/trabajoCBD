@@ -52,7 +52,7 @@ public class TestQueries_consumption {
 	@Test
 	public void getConsumoMediobyId() throws UnknownHostException{
 		Queries_consumption ds = new Queries_consumption();
-		ds.getConsumoMediobyId(TipoEnergia.energia_activa_p1.toString(), "58fbaeb3d03ec399b136215a");
+		ds.getConsumoMediobyId(TipoEnergia.energia_activa_p1.toString(), "5918c09018688cc448fb0d1d");
 	}
 	
 	@Test
