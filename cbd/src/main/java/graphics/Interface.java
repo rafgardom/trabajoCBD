@@ -38,14 +38,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.FlowLayout;
 
 public class Interface {
 
 	private JFrame frame;
 	
-	public static String graphicSelected,tipo1_tipo, tipo1_rango,tipo2_tipo,tipo2_rango;
+	public static String graphicSelected,tipo_tipo;
 	public static Integer anyoInicio, anyoFin, anyoOpcional;
-	public static boolean graficaBarras,isAnyoOpcional;
+	public static boolean graficaBarras,isAnyoOpcional,isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior;
 	public static JTextPane textPane = new JTextPane();
 
 	/**
@@ -89,7 +90,7 @@ public class Interface {
 			}
 		});
 		comboBox.setToolTipText("");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Variación IPC", "Nivel IPC", "Actividad laboral", "Consumo medio", "Laboral + IPC"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Variación IPC", "Nivel IPC", "Actividad laboral", "Consumo energético", "Consumo medio", "Laboral + IPC"}));
 		graphicSelected = comboBox.getSelectedItem().toString();
 		comboBox.setBounds(10, 11, 133, 20);
 		frame.getContentPane().add(comboBox);
@@ -132,65 +133,29 @@ public class Interface {
 		});
 		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"2013", "2014", "2015", "2016"}));
 		anyoOpcional = Integer.valueOf(comboBox_7.getSelectedItem().toString());
-		comboBox_7.setBounds(456, 84, 56, 20);
+		comboBox_7.setBounds(290, 19, 56, 20);
 		frame.getContentPane().add(comboBox_7);
 		
 		Panel panel = new Panel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setForeground(Color.GRAY);
-		panel.setBounds(207, 11, 305, 30);
+		panel.setBounds(368, 9, 159, 30);
 		frame.getContentPane().add(panel);
 		
-		JLabel lblTipo = new JLabel("Tipo1");
+		JLabel lblTipo = new JLabel("Tipo");
 		panel.add(lblTipo);
 		
 		final JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tipo1_tipo = comboBox_3.getSelectedItem().toString();
+				tipo_tipo = comboBox_3.getSelectedItem().toString();
 			}
 		});
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Paro", "Empleo", "Actividad"}));
-		tipo1_tipo = comboBox_3.getSelectedItem().toString();
+		tipo_tipo = comboBox_3.getSelectedItem().toString();
 		panel.add(comboBox_3);
-		
-		final JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tipo1_rango = comboBox_5.getSelectedItem().toString();
-			}
-		});
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"General", "Primaria", "Secundaria-1 FP", "Secundaria-2 FP", "Educ. Superior"}));
-		tipo1_rango = comboBox_5.getSelectedItem().toString();
-		panel.add(comboBox_5);
-		
-		Panel panel_1 = new Panel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBounds(207, 47, 305, 30);
-		frame.getContentPane().add(panel_1);
-		
-		JLabel lblTipo_1 = new JLabel("Tipo2");
-		panel_1.add(lblTipo_1);
-		
-		final JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tipo2_tipo = comboBox_4.getSelectedItem().toString();
-			}
-		});
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Paro", "Empleo", "Actividad"}));
-		tipo2_tipo = comboBox_4.getSelectedItem().toString();
-		panel_1.add(comboBox_4);
-		
-		final JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tipo2_rango = comboBox_6.getSelectedItem().toString();
-			}
-		});
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"General", "Primaria", "Secundaria-1 FP", "Secundaria-2 FP", "Educ. Superior"}));
-		tipo2_rango = comboBox_6.getSelectedItem().toString();
-		panel_1.add(comboBox_6);
 		
 		final JCheckBox chckbxMostrarGrficaDe = new JCheckBox("Mostrar gráfica de barras (en caso de estar disponible)");
 		chckbxMostrarGrficaDe.addActionListener(new ActionListener() {
@@ -246,20 +211,53 @@ public class Interface {
 				
 				if(graphicSelected.equals("Actividad laboral")){
 					try {
+						if(ToolKit.numSelectedTypes(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior) == 0)
+							textPane.setText("Debe seleccionar al menos 1 tipo de datos de la lista de checkBoxs");
+						if(ToolKit.numSelectedTypes(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior) > 1){
+							textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo y el año Inicio.");
+							LaboralGraph.generateLaboralRateMultipleLineGraph("Gráfica", "Actividad laboral - "+tipo_tipo+" ("+anyoInicio+")", "Trimestres",
+										"Nivel de actividad", anyoInicio.toString(), ToolKit.getAllSelected(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior), ToolKit.getType(tipo_tipo));
+						}
 						if(!isAnyoOpcional && !graficaBarras){
-							textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo1 y el año Inicio.");
-							LaboralGraph.generateLaboralRateLineGraph("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+							if(ToolKit.numSelectedTypes(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior) == 1){
+								textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo y el año Inicio.");
+								LaboralGraph.generateLaboralRateLineGraph("Gráfica", "Actividad laboral - "+tipo_tipo+" ("+anyoInicio+")", "Trimestres",
+										"Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(ToolKit.selectedCheckBox(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior)),ToolKit.getType(tipo_tipo));
+							}
 						}
 						if(!isAnyoOpcional && graficaBarras){
-							textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo1 y el año Inicio.");
-							LaboralGraph.generateLaboralRateBarGraph("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+							if(ToolKit.numSelectedTypes(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior) == 1){
+								textPane.setText("Nota: los datos que se tomarán para la representación serán los introducidos en el Tipo1 y el año Inicio.");
+								LaboralGraph.generateLaboralRateBarGraph("Gráfica", "Actividad laboral - "+tipo_tipo+" ("+anyoInicio+")", "Trimestres", 
+										"Nivel de actividad", anyoInicio.toString(), ToolKit.getRateType(ToolKit.selectedCheckBox(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior)),ToolKit.getType(tipo_tipo));
+							}
 						}
 						if(isAnyoOpcional){
-							LaboralGraph.generateLaboralRateMultipleLineGraphByYear("Gráfica", "Actividad laboral - "+tipo1_tipo+" ("+anyoInicio+","+anyoFin+","+anyoOpcional+")", "Trimestres"+" - "+tipo1_rango, "Nivel de actividad", 
-									anyoInicio.toString(), anyoFin.toString(), anyoOpcional.toString(), ToolKit.getRateType(tipo1_rango),ToolKit.getType(tipo1_tipo));
+							LaboralGraph.generateLaboralRateMultipleLineGraphByYear("Gráfica", "Actividad laboral - "+tipo_tipo+" ("+anyoInicio+","+anyoFin+","+anyoOpcional+")", "Trimestres", "Nivel de actividad", 
+									anyoInicio.toString(), anyoFin.toString(), anyoOpcional.toString(), ToolKit.getRateType(ToolKit.selectedCheckBox(isGeneral,isPrimaria,isSecundaria1,isSecundaria2,isEducSuperior)),ToolKit.getType(tipo_tipo));
 							textPane.setText("Nota: los años de Inicio y Fin no son considerados como tal, sino como años a comparar (sin considerar una fecha inicial o final)");
 						}
 					} catch (UnknownHostException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(graphicSelected.equals("Consumo energético")){
+					try{
+						textPane.setText("Nota: el único año tomado como parámetro será en de Inicio.");
+						if(!graficaBarras)
+							ConsumptionGraph.generateConsumptionLineGraph("Gráfica", "Consumo energético", "Trimestre", "Consumo",  anyoInicio.toString());
+						else
+							ConsumptionGraph.generateConsumptionBarGraph("Gráfica", "Consumo energético", "Trimestre", "Consumo",  anyoInicio.toString());
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(graphicSelected.equals("Laboral + IPC")){
+					try{
+						CombinationGraph.generateLaboralIpcGraph("Gráfica", "Laboral - IPC", "Trimestres", "Valores", anyoInicio, ToolKit.getType(tipo_tipo));
+					}catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
@@ -275,8 +273,60 @@ public class Interface {
 				isAnyoOpcional = chckbxNewCheckBox.isSelected();
 			}
 		});
-		chckbxNewCheckBox.setBounds(354, 83, 97, 23);
+		chckbxNewCheckBox.setBounds(207, 18, 77, 23);
 		frame.getContentPane().add(chckbxNewCheckBox);
+		
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBounds(207, 45, 320, 62);
+		frame.getContentPane().add(panel_1);
+		
+		final JCheckBox chckbxGeneral = new JCheckBox("General");
+		chckbxGeneral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isGeneral = chckbxGeneral.isSelected();
+			}
+		});
+		isGeneral = chckbxGeneral.isSelected();
+		panel_1.add(chckbxGeneral);
+		
+		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Primaria");
+		chckbxNewCheckBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isPrimaria = chckbxNewCheckBox_1.isSelected();
+			}
+		});
+		panel_1.add(chckbxNewCheckBox_1);
+		isPrimaria = chckbxNewCheckBox_1.isSelected();
+		
+		final JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Secundaria-1 FP");
+		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isSecundaria1 = chckbxNewCheckBox_2.isSelected();
+			}
+		});
+		panel_1.add(chckbxNewCheckBox_2);
+		isSecundaria1 = chckbxNewCheckBox_2.isSelected();
+		
+		final JCheckBox chckbxNewCheckBox_3 = new JCheckBox("Secundaria-2 FP");
+		chckbxNewCheckBox_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isSecundaria2 = chckbxNewCheckBox_3.isSelected();
+			}
+		});
+		isSecundaria2 = chckbxNewCheckBox_3.isSelected();
+		panel_1.add(chckbxNewCheckBox_3);
+		
+		final JCheckBox chckbxNewCheckBox_4 = new JCheckBox("Educ. Superior");
+		chckbxNewCheckBox_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isEducSuperior = chckbxNewCheckBox_4.isSelected();
+			}
+		});
+		isEducSuperior = chckbxNewCheckBox_4.isSelected();
+		panel_1.add(chckbxNewCheckBox_4);
 		
 	}
 	

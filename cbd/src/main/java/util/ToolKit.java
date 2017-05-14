@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,38 @@ public class ToolKit {
 		if(input.equals("Empleo")) return LaboralRateType.EMPLEO;
 		if(input.equals("Actividad")) return LaboralRateType.ACTIVIDAD;
 		return null;
+	}
+
+	public static int numSelectedTypes(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
+			boolean isSecundaria2, boolean isEducSuperior) {
+		int res = 0;
+		if(isGeneral) res++;
+		if(isPrimaria) res++;
+		if(isSecundaria1) res++;
+		if(isSecundaria2) res++;
+		if(isEducSuperior) res++;
+		return res;
+	}
+
+	public static String selectedCheckBox(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
+			boolean isSecundaria2, boolean isEducSuperior) {
+		if(isGeneral) return "General";
+		if(isPrimaria) return "Primaria";
+		if(isSecundaria1) return "Secundaria-1 FP";
+		if(isSecundaria2) return "Secundaria-2 FP";
+		if(isEducSuperior) return "Educ. Superior";
+		return null;
+	}
+
+	public static Collection<LaboralType> getAllSelected(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
+			boolean isSecundaria2, boolean isEducSuperior) {
+		Collection<LaboralType> res = new ArrayList<LaboralType>();
+		if(isGeneral) res.add(getRateType("General"));
+		if(isPrimaria) res.add(getRateType("Primaria"));
+		if(isSecundaria1) res.add(getRateType("Secundaria-1 FP"));		
+		if(isSecundaria2) res.add(getRateType("Secundaria-2 FP"));
+		if(isEducSuperior) res.add(getRateType("Educ. Superior"));
+		return res;
 	}
 
 }
