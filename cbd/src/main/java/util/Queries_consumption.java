@@ -225,7 +225,7 @@ public class Queries_consumption {
 		return output.next();
 	}
 	
-	public ConsumptionForm getActiveEnergyMaxPower(String date) throws UnknownHostException{
+	public ConsumptionForm getActiveEnergyMaxPower(String date, int cont) throws UnknownHostException{
 		String[] dateArray = date.split("-");
 		String year = dateArray[0];
 		String month = dateArray[1];
@@ -236,6 +236,9 @@ public class Queries_consumption {
 		List<String> ls = Arrays.asList(ToolKit.fromStringToArray(data.toString()));
 		if(ls.size()<20){
 			day++;
+			if(day >31){
+				day = 1;
+			}
 			String newDate = null;
 			if(day <10){
 				newDate = year+"-"+month+"-"+"0"+day;
@@ -243,7 +246,13 @@ public class Queries_consumption {
 				newDate = year+"-"+month+"-"+day;
 			}
 			
-			this.getActiveEnergyMaxPower(newDate);
+			if(cont > 31){
+				result = null;
+			}else{
+				cont++;
+				result = this.getActiveEnergyMaxPower(newDate, cont);
+			}
+			
 			
 		}else{
 			try{
@@ -264,11 +273,28 @@ public class Queries_consumption {
 		return result;
 	}
 	
+	public List<ConsumptionForm> getActiveEnergyMaxPowerByYear(String year) throws UnknownHostException{
+		List<ConsumptionForm> result = Lists.newArrayList();
+		int month = 1;
+		while(month <= 12){
+			String date = year + "-0"+month +"-01";
+			ConsumptionForm cf = this.getActiveEnergyMaxPower(date,0);
+			
+			result.add(cf);
+			month++;
+		}
+		
+		return result;
+	}
+	
 	public static void main(String[] args) throws UnknownHostException {
 		Queries_consumption qc = new Queries_consumption();
-		String date = "2015-07-01";//year-month-day
-		ConsumptionForm cfConsumptionForm = qc.getActiveEnergyMaxPower(date);
-		System.out.println(cfConsumptionForm);
+		
+//		ConsumptionForm p = qc.getActiveEnergyMaxPower("2016-05-24",0);
+//		System.out.println(p);
+		
+		List<ConsumptionForm> consumptionForms = qc.getActiveEnergyMaxPowerByYear("2015");
+		System.out.println(consumptionForms);
 		
 	}
 

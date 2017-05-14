@@ -62,7 +62,7 @@ public class LaboralGraph {
 	 * @param laboralTypes
 	 * @throws UnknownHostException
 	 */
-	public void generateLaboralRateMultipleLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralRateMultipleLineGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			String year, Collection<LaboralType> laboralTypes, LaboralRateType laboralRateType) throws UnknownHostException{
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
 		Queries_laboral ql = new Queries_laboral();
@@ -78,57 +78,57 @@ public class LaboralGraph {
 			for(LaboralForm laboralForm: lfs){
 				if(laboralForm.getDataName().contains("General")){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "General", "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, "General", "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "General", "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, "General", "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "General", "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, "General", "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "General", "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, "General", "T4");
 					}
 					
 				}else if(laboralForm.getDataName().contains("Primariaoinferior")){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, "Primariaoinferior", "T4");
 					}
 					
 				}else if(laboralForm.getDataName().contains("Secundariaprimeraetapayformacionprofesional")){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariaprimeraetapayformacionprofesional", "T4");
 					}
 					
 				}else if(laboralForm.getDataName().contains("Secundariasegundaetapayformaciónprofesional")){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, "Secundariasegundaetapayformaciónprofesional", "T4");
 					}
 					
 				}else if(laboralForm.getDataName().contains("Educaciónsuperior")){
 					if(laboralForm.getDataName().contains("T1")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T1");
+						addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T1");
 					}else if(laboralForm.getDataName().contains("T2")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T2");
+						addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T2");
 					}else if(laboralForm.getDataName().contains("T3")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T3");
+						addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T3");
 					}else if(laboralForm.getDataName().contains("T4")){
-						this.addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T4");
+						addDataSetValue(laboralForm, data, laboralRateType, "Educaciónsuperior", "T4");
 					}
 					
 				}
@@ -264,15 +264,15 @@ public class LaboralGraph {
 		List<LaboralType> laboralTypes = Lists.newArrayList();
 		laboralTypes.add(LaboralType.GENERAL);
 		laboralTypes.add(LaboralType.PRIMARIA_O_INFERIOR);
-		LaboralGraph lg = new LaboralGraph();
-		lg.generateLaboralRateLineGraph("Actividad laboral", "Paro", "Cuatrimestres", "Tasa de paro", "2013", 
+//		LaboralGraph lg = new LaboralGraph();
+		LaboralGraph.generateLaboralRateLineGraph("Actividad laboral", "Paro", "Cuatrimestres", "Tasa de paro", "2013", 
 				LaboralType.PRIMARIA_O_INFERIOR, LaboralRateType.PARO);
-		lg.generateLaboralRateBarGraph("Actividad laboral", "Empleo", "Cuatrimestres", "Tasa de empleo", "2013", 
+		LaboralGraph.generateLaboralRateBarGraph("Actividad laboral", "Empleo", "Cuatrimestres", "Tasa de empleo", "2013", 
 				LaboralType.PRIMARIA_O_INFERIOR, LaboralRateType.EMPLEO);
-		lg.generateLaboralRateMultipleLineGraph("Actividad laboral", LaboralRateType.EMPLEO.getValue(), "Cuatrimestres", 
+		LaboralGraph.generateLaboralRateMultipleLineGraph("Actividad laboral", LaboralRateType.EMPLEO.getValue(), "Cuatrimestres", 
 				"Tasa de empleo", "2013",laboralTypes, LaboralRateType.EMPLEO);
 		
-		lg.generateLaboralRateMultipleLineGraphByYear("Actividad laboral", LaboralRateType.PARO.getValue(), "Cuatrimestre",
+		LaboralGraph.generateLaboralRateMultipleLineGraphByYear("Actividad laboral", LaboralRateType.PARO.getValue(), "Cuatrimestre",
 				"Tasa paro", "2013", "2015", "2016",LaboralType.EDUCACION_SUPERIOR, LaboralRateType.PARO);
 	}
 }
