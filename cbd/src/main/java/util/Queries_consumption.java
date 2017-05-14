@@ -6,15 +6,25 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperationContext;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
+
 import com.google.common.collect.Lists;
+import com.mongodb.AggregationOptions;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
+import com.mongodb.Cursor;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.client.AggregateIterable;
+
 
 import enumerados.PotenciaMax;
 import enumerados.TipoEnergia;
+import forms.ConsumptionForm;
 
 public class Queries_consumption {
 	
@@ -185,6 +195,81 @@ public class Queries_consumption {
 		query.put("datos_contrato.fecha_ultima_lectura", new BasicDBObject("$regex",anio));
 		DBCursor res = collection.find(query);
 		return res;
+	}
+	
+	//Devuelve la energia activa_p3 y potencia máxima_p3 media por trimestre de un año dado
+	public DBObject getActiveEnergyMaxPowerCursor(String date) throws UnknownHostException{
+		DBCollection collection = DatabaseService.getCollection("consumption");
+		
+		DBObject filterExpression = new BasicDBObject();
+		filterExpression.put("input", "$consumos");
+        filterExpression.put("as", "consumo");
+        filterExpression.put("cond", new BasicDBObject("$eq", Arrays.<Object> asList("$$consumo.fecha_lectura_actual", date)));
+        
+		DBObject project = new BasicDBObject("$project",
+				new BasicDBObject("items", 
+						new BasicDBObject("$filter", filterExpression)));
+		
+		
+		//Allow to return all objects
+		AggregationOptions aggregationOptions = AggregationOptions.builder()
+                .batchSize(100)
+                .outputMode(AggregationOptions.OutputMode.CURSOR)
+                .allowDiskUse(true)
+                .build();
+		
+		List<DBObject> pipeline = Arrays.asList(project);
+		
+		Cursor output =  collection.aggregate(pipeline, aggregationOptions);
+		
+		return output.next();
+	}
+	
+	public ConsumptionForm getActiveEnergyMaxPower(String date) throws UnknownHostException{
+		String[] dateArray = date.split("-");
+		String year = dateArray[0];
+		String month = dateArray[1];
+		Integer day = new Integer(dateArray[2]);
+		ConsumptionForm result = null;
+		
+		DBObject data = this.getActiveEnergyMaxPowerCursor(date);
+		List<String> ls = Arrays.asList(ToolKit.fromStringToArray(data.toString()));
+		if(ls.size()<20){
+			day++;
+			String newDate = null;
+			if(day <10){
+				newDate = year+"-"+month+"-"+"0"+day;
+			}else{
+				newDate = year+"-"+month+"-"+day;
+			}
+			
+			this.getActiveEnergyMaxPower(newDate);
+			
+		}else{
+			try{
+				String[] activaArray = ls.get(6).split(":");
+				String[] lecturaArray = ls.get(9).split(":");
+				String[] anioArray = ls.get(11).split(":");
+				String[] reactivaArray = ls.get(19).split(":");
+				
+				result = new ConsumptionForm(new Integer(activaArray[1]), lecturaArray[1], anioArray[1], 
+						new Integer(reactivaArray[1]));
+				
+			}catch(Throwable oops){
+				result = null;
+				System.err.println("Error en la reconstruccion de consumptionForm");
+			}
+		}
+		
+		return result;
+	}
+	
+	public static void main(String[] args) throws UnknownHostException {
+		Queries_consumption qc = new Queries_consumption();
+		String date = "2015-07-01";//year-month-day
+		ConsumptionForm cfConsumptionForm = qc.getActiveEnergyMaxPower(date);
+		System.out.println(cfConsumptionForm);
+		
 	}
 
 }

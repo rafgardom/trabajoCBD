@@ -78,11 +78,7 @@ public class CombinationGraph {
 		List<IpcForm> ipcForms;
 		List<LaboralForm> laboralForms;
 		
-		if(year == 2016){
-			ipcForms = qIpc.getAll_TotalNacionalIndice(2016,2015);
-		}else{
-			ipcForms = qIpc.getAll_TotalNacionalIndice(year+1, year);
-		}
+		ipcForms = qIpc.getAll_TotalNacionalIndice(year, year);
 		
 		laboralForms = ql.findYearFilterSummary(year.toString(), LaboralType.GENERAL);
 		ipcForms = this.getIpcFormByQuarter(ipcForms);
@@ -109,7 +105,7 @@ public class CombinationGraph {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		CombinationGraph cg = new CombinationGraph();
-		cg.generateLaboralIpcGraph("Actividad laboral", "Actividad Laboral vs IPC", "Cuatrimestre",
+		cg.generateLaboralIpcGraph("Estadísticas", "Actividad Laboral vs IPC", "Cuatrimestre",
 				"Variación", 2013 , LaboralRateType.PARO);
 	}
 }
