@@ -19,7 +19,7 @@ import util.Queries_laboral;
 
 public class CombinationGraph {
 
-	private void addDataSetValue(LaboralForm laboralForm, DefaultCategoryDataset data, LaboralRateType laboralRateType, String type, String period){
+	private static void addDataSetValue(LaboralForm laboralForm, DefaultCategoryDataset data, LaboralRateType laboralRateType, String type, String period){
 		if(laboralRateType.getValue().equals("Paro")){
 			data.addValue(laboralForm.getStatistics().getTasadeparo(), type, period);
 			
@@ -31,7 +31,7 @@ public class CombinationGraph {
 		}
 	}
 	
-	private List<IpcForm> getIpcFormByQuarter(List<IpcForm> ipcForms){
+	private static List<IpcForm> getIpcFormByQuarter(List<IpcForm> ipcForms){
 		List<IpcForm> result = Lists.newArrayList();
 		Assert.assertTrue(!ipcForms.isEmpty());
 		Float mediumT1 = null;
@@ -69,7 +69,7 @@ public class CombinationGraph {
 	}
 	
 	
-	public void generateLaboralIpcGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralIpcGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer year, LaboralRateType laboralRateType) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -83,7 +83,7 @@ public class CombinationGraph {
 		ipcForms = qIpc.getAll_TotalNacionalIndice(year, year);
 		
 		laboralForms = ql.findYearFilterSummary(year.toString(), LaboralType.GENERAL);
-		ipcForms = this.getIpcFormByQuarter(ipcForms);
+		ipcForms = getIpcFormByQuarter(ipcForms);
 		
 		for(IpcForm ipcForm: ipcForms){
 			data.addValue(ipcForm.getValue(), "Evolución IPC (" + ipcForm.getYear() + ")", ipcForm.getMonth());
@@ -91,13 +91,13 @@ public class CombinationGraph {
 		
 		for(LaboralForm laboralForm: laboralForms){
 			if(laboralForm.getDataName().contains("T1")){
-				this.addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T1");
+				addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T1");
 			}else if(laboralForm.getDataName().contains("T2")){
-				this.addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T2");
+				addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T2");
 			}else if(laboralForm.getDataName().contains("T3")){
-				this.addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T3");
+				addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T3");
 			}else if(laboralForm.getDataName().contains("T4")){
-				this.addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T4");
+				addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T4");
 			}
 			
 		}
@@ -105,7 +105,7 @@ public class CombinationGraph {
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
 	}
 	
-	public void generateConsumptionIpcGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateConsumptionIpcGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer year) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -116,7 +116,7 @@ public class CombinationGraph {
 		
 		ipcForms = qIpc.getAll_TotalNacionalIndice(year, year);
 		
-		ipcForms = this.getIpcFormByQuarter(ipcForms);
+		ipcForms = getIpcFormByQuarter(ipcForms);
 		
 		for(IpcForm ipcForm: ipcForms){
 			data.addValue(ipcForm.getValue(), "Evolución IPC (" + ipcForm.getYear() + ")", ipcForm.getMonth());
@@ -224,7 +224,7 @@ public class CombinationGraph {
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
 	}
 	
-	public void generateLaboralConsumptionGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
+	public static void generateLaboralConsumptionGraph(String windowName, String graphName, String xAxisName, String yAxisName, 
 			Integer year, LaboralRateType laboralRateType) throws UnknownHostException{
 		GraphUtil gu = new GraphUtil();
 		DefaultCategoryDataset data = new DefaultCategoryDataset();
@@ -337,13 +337,13 @@ public class CombinationGraph {
 		
 		for(LaboralForm laboralForm: laboralForms){
 			if(laboralForm.getDataName().contains("T1")){
-				this.addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T1");
+				addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T1");
 			}else if(laboralForm.getDataName().contains("T2")){
-				this.addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T2");
+				addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T2");
 			}else if(laboralForm.getDataName().contains("T3")){
-				this.addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T3");
+				addDataSetValue(laboralForm, data, laboralRateType,laboralRateType.getValue(), "T3");
 			}else if(laboralForm.getDataName().contains("T4")){
-				this.addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T4");
+				addDataSetValue(laboralForm, data, laboralRateType, laboralRateType.getValue(), "T4");
 			}
 			
 		}
@@ -352,14 +352,13 @@ public class CombinationGraph {
 	}
 	
 	public static void main(String[] args) throws UnknownHostException {
-		CombinationGraph cg = new CombinationGraph();
-		cg.generateLaboralIpcGraph("Estadísticas", "Actividad Laboral vs IPC", "Cuatrimestre",
-				"Variación", 2013 , LaboralRateType.PARO);
+		CombinationGraph.generateLaboralIpcGraph("Estadísticas", "Actividad Laboral vs IPC", "Cuatrimestre",
+				"Variación", 2015 , LaboralRateType.ACTIVIDAD);
 		
-		cg.generateLaboralConsumptionGraph("Estadísticas", "Actividad Laboral vs Consumo energético", "Cuatrimestre",
+		CombinationGraph.generateLaboralConsumptionGraph("Estadísticas", "Actividad Laboral vs Consumo energético", "Cuatrimestre",
 				"Variación-Relación", 2015 , LaboralRateType.PARO);
 		
-		cg.generateConsumptionIpcGraph("Estadísticas", "Actividad Laboral vs Consumo energético", "Cuatrimestre",
+		CombinationGraph.generateConsumptionIpcGraph("Estadísticas", "Actividad Laboral vs Consumo energético", "Cuatrimestre",
 				"Variación-Relación", 2015);
 	}
 }
