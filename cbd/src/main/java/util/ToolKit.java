@@ -128,6 +128,10 @@ public class ToolKit {
 		return res;
 	}
 	
+	/*
+	 * Transforma el string del tipo de educación seleccionada en la interfaz
+	 * en su correspondiente enumerado.
+	 */
 	public static LaboralType getRateType(String input){
 		if(input.equals("General")) return LaboralType.GENERAL;
 		if(input.equals("Primaria")) return LaboralType.PRIMARIA_O_INFERIOR;
@@ -138,6 +142,10 @@ public class ToolKit {
 		
 	}
 
+	/*
+	 * Transforma el string del tipo de ocupación laboral seleccionada en la interfaz
+	 * en su correspondiente enumerado.
+	 */
 	public static LaboralRateType getType(String input) {
 		if(input.equals("Paro")) return LaboralRateType.PARO;
 		if(input.equals("Empleo")) return LaboralRateType.EMPLEO;
@@ -145,6 +153,10 @@ public class ToolKit {
 		return null;
 	}
 
+	/*
+	 * Devuelve el número de elementos (checkBoxs) de la interfaz  han
+	 * sido seleccionados.
+	 */
 	public static int numSelectedTypes(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
 			boolean isSecundaria2, boolean isEducSuperior) {
 		int res = 0;
@@ -156,6 +168,10 @@ public class ToolKit {
 		return res;
 	}
 
+	/*
+	 * Recibe una serie de booleanos que corresponden a los checkbox de
+	 * la interfaz gráfica y devuelve el string cuya casilla ha sido marcada (true).
+	 */
 	public static String selectedCheckBox(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
 			boolean isSecundaria2, boolean isEducSuperior) {
 		if(isGeneral) return "General";
@@ -166,6 +182,11 @@ public class ToolKit {
 		return null;
 	}
 
+	/*
+	 * Recibe una serie de booleanos que corresponden a los checkbox de 
+	 * la interfaz gráfica y devuelve una colección de String de las
+	 * casillas que han sido marcadas (true).
+	 */
 	public static Collection<LaboralType> getAllSelected(boolean isGeneral, boolean isPrimaria, boolean isSecundaria1,
 			boolean isSecundaria2, boolean isEducSuperior) {
 		Collection<LaboralType> res = new ArrayList<LaboralType>();

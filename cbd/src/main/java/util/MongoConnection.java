@@ -19,6 +19,7 @@ public class MongoConnection {
 		return db;
 	}
 	
+	//Arranca la BD
 	public static void runServer(String path){
 		System.out.println("Abriendo consola de comandos...");
 		
