@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import javax.swing.AbstractAction;
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 
+import util.MongoConnection;
+import util.Populate;
 import util.ToolKit;
 
 public class Interface {
@@ -64,7 +67,7 @@ public class Interface {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.WHITE);
-		frame.setBounds(100, 100, 553, 318);
+		frame.setBounds(100, 100, 531, 318);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -127,7 +130,7 @@ public class Interface {
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setForeground(Color.GRAY);
-		panel.setBounds(368, 9, 159, 30);
+		panel.setBounds(368, 9, 140, 30);
 		frame.getContentPane().add(panel);
 		
 		JLabel lblTipo = new JLabel("Tipo");
@@ -149,7 +152,7 @@ public class Interface {
 				graficaBarras = chckbxMostrarGrficaDe.isSelected();
 			}
 		});
-		chckbxMostrarGrficaDe.setBounds(10, 215, 372, 23);
+		chckbxMostrarGrficaDe.setBounds(6, 133, 372, 23);
 		frame.getContentPane().add(chckbxMostrarGrficaDe);
 		textPane.setBackground(Color.LIGHT_GRAY);
 		
@@ -158,7 +161,7 @@ public class Interface {
 		textPane.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textPane.setEnabled(false);
 		textPane.setEditable(false);
-		textPane.setBounds(10, 157, 517, 51);
+		textPane.setBounds(10, 157, 498, 51);
 		textPane.setDisabledTextColor(new Color(0).RED);
 		frame.getContentPane().add(textPane);
 		
@@ -284,7 +287,7 @@ public class Interface {
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBounds(207, 45, 320, 62);
+		panel_1.setBounds(207, 45, 301, 62);
 		frame.getContentPane().add(panel_1);
 		
 		final JCheckBox chckbxGeneral = new JCheckBox("General");
@@ -331,6 +334,36 @@ public class Interface {
 		});
 		isEducSuperior = chckbxNewCheckBox_4.isSelected();
 		panel_1.add(chckbxNewCheckBox_4);
+		
+		JButton btnPopulate = new JButton("Populate");
+		btnPopulate.setBackground(new Color(204, 255, 153));
+		btnPopulate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Populate.populateConsumption();
+					 Populate.populateLaboral();
+					 Populate.populateIPC();
+					 textPane.setText("Colecciones pobladas correctamente");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnPopulate.setForeground(new Color(0, 0, 0));
+		btnPopulate.setBounds(419, 210, 89, 23);
+		frame.getContentPane().add(btnPopulate);
+		
+		JButton btnArrancarBd = new JButton("Arrancar BD");
+		btnArrancarBd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MongoConnection.runServer("C:\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongod.exe");
+				 textPane.setText("Servidor arrancado correctamente");
+			}
+		});
+		btnArrancarBd.setBackground(new Color(255, 102, 102));
+		btnArrancarBd.setForeground(new Color(0, 0, 0));
+		btnArrancarBd.setBounds(301, 211, 108, 23);
+		frame.getContentPane().add(btnArrancarBd);
 		
 	}
 	
