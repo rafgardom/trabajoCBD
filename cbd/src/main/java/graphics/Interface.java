@@ -67,7 +67,7 @@ public class Interface {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.WHITE);
-		frame.setBounds(100, 100, 531, 318);
+		frame.setBounds(100, 100, 505, 318);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -130,7 +130,7 @@ public class Interface {
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setForeground(Color.GRAY);
-		panel.setBounds(368, 9, 140, 30);
+		panel.setBounds(368, 11, 117, 30);
 		frame.getContentPane().add(panel);
 		
 		JLabel lblTipo = new JLabel("Tipo");
@@ -161,7 +161,7 @@ public class Interface {
 		textPane.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textPane.setEnabled(false);
 		textPane.setEditable(false);
-		textPane.setBounds(10, 157, 498, 51);
+		textPane.setBounds(10, 157, 475, 51);
 		textPane.setDisabledTextColor(new Color(0).RED);
 		frame.getContentPane().add(textPane);
 		
@@ -287,7 +287,7 @@ public class Interface {
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBounds(207, 45, 301, 62);
+		panel_1.setBounds(207, 45, 278, 62);
 		frame.getContentPane().add(panel_1);
 		
 		final JCheckBox chckbxGeneral = new JCheckBox("General");
@@ -350,20 +350,8 @@ public class Interface {
 			}
 		});
 		btnPopulate.setForeground(new Color(0, 0, 0));
-		btnPopulate.setBounds(419, 210, 89, 23);
+		btnPopulate.setBounds(396, 209, 89, 23);
 		frame.getContentPane().add(btnPopulate);
-		
-		JButton btnArrancarBd = new JButton("Arrancar BD");
-		btnArrancarBd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				MongoConnection.runServer("C:\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongod.exe");
-				 textPane.setText("Servidor arrancado correctamente");
-			}
-		});
-		btnArrancarBd.setBackground(new Color(255, 102, 102));
-		btnArrancarBd.setForeground(new Color(0, 0, 0));
-		btnArrancarBd.setBounds(301, 211, 108, 23);
-		frame.getContentPane().add(btnArrancarBd);
 		
 	}
 	
