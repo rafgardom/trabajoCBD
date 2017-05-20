@@ -210,15 +210,36 @@ public class CombinationGraph {
 			}
 			
 			
-			data.addValue(activeEnergyT1/10, "Energía activa", "T1");
-			data.addValue(activeEnergyT2/10, "Energía activa", "T2");
-			data.addValue(activeEnergyT3/10, "Energía activa", "T3");
-			data.addValue(activeEnergyT4/10, "Energía activa", "T4");
+			if(activeEnergyT1 != 0){
+				data.addValue(activeEnergyT1, "Energía activa", "T1");
+			}
+			if(activeEnergyT2 != 0){
+				data.addValue(activeEnergyT2, "Energía activa", "T2");
+			}
 			
-			data.addValue(reactiveEnergyT1/10, "Energía reactiva", "T1");
-			data.addValue(reactiveEnergyT2/10, "Energía reactiva", "T2");
-			data.addValue(reactiveEnergyT3/10, "Energía reactiva", "T3");
-			data.addValue(reactiveEnergyT4/10, "Energía reactiva", "T4");
+			if(activeEnergyT3 != 0){
+				data.addValue(activeEnergyT3, "Energía activa", "T3");
+			}
+			
+			if(activeEnergyT4 != 0){
+				data.addValue(activeEnergyT4, "Energía activa", "T4");
+			}
+				
+			if(reactiveEnergyT1 != 0){
+				data.addValue(reactiveEnergyT1, "Energía reactiva", "T1");
+			}
+			
+			if(reactiveEnergyT2 != 0){
+				data.addValue(reactiveEnergyT2, "Energía reactiva", "T2");
+			}
+			
+			if(reactiveEnergyT3 != 0){
+				data.addValue(reactiveEnergyT3, "Energía reactiva", "T3");
+			}
+			
+			if(reactiveEnergyT4 != 0){
+				data.addValue(reactiveEnergyT4, "Energía reactiva", "T4");
+			}
 			
 		
 		gu.createLineGraph(windowName, graphName, xAxisName, yAxisName, data);
@@ -321,15 +342,36 @@ public class CombinationGraph {
 		}
 		
 		
-		data.addValue(activeEnergyT1/10, "Energía activa", "T1");
-		data.addValue(activeEnergyT2/10, "Energía activa", "T2");
-		data.addValue(activeEnergyT3/10, "Energía activa", "T3");
-		data.addValue(activeEnergyT4/10, "Energía activa", "T4");
+		if(activeEnergyT1 != 0){
+			data.addValue(activeEnergyT1, "Energía activa", "T1");
+		}
+		if(activeEnergyT2 != 0){
+			data.addValue(activeEnergyT2, "Energía activa", "T2");
+		}
 		
-		data.addValue(reactiveEnergyT1/10, "Energía reactiva", "T1");
-		data.addValue(reactiveEnergyT2/10, "Energía reactiva", "T2");
-		data.addValue(reactiveEnergyT3/10, "Energía reactiva", "T3");
-		data.addValue(reactiveEnergyT4/10, "Energía reactiva", "T4");
+		if(activeEnergyT3 != 0){
+			data.addValue(activeEnergyT3, "Energía activa", "T3");
+		}
+		
+		if(activeEnergyT4 != 0){
+			data.addValue(activeEnergyT4, "Energía activa", "T4");
+		}
+			
+		if(reactiveEnergyT1 != 0){
+			data.addValue(reactiveEnergyT1, "Energía reactiva", "T1");
+		}
+		
+		if(reactiveEnergyT2 != 0){
+			data.addValue(reactiveEnergyT2, "Energía reactiva", "T2");
+		}
+		
+		if(reactiveEnergyT3 != 0){
+			data.addValue(reactiveEnergyT3, "Energía reactiva", "T3");
+		}
+		
+		if(reactiveEnergyT4 != 0){
+			data.addValue(reactiveEnergyT4, "Energía reactiva", "T4");
+		}
 		
 		
 		laboralForms = ql.findYearFilterSummary(year.toString(), LaboralType.GENERAL);
